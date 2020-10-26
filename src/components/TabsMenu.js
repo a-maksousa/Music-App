@@ -19,11 +19,7 @@ const TabsMenu = (props) => {
 
         <Menu.Menu position="right">
           <Menu.Item>
-            <Input
-              transparent
-              icon={{ name: "search", link: true }}
-              placeholder="Search ..."
-            />
+            <Input transparent icon={{ name: "search", link: true }} placeholder="Search ..." />
           </Menu.Item>
         </Menu.Menu>
       </Menu>
