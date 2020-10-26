@@ -9,8 +9,11 @@ import Col from "react-bootstrap/Col";
 import { Segment } from "semantic-ui-react";
 const Dashboard = (props) => {
   const [activeItem, setActiveItem] = React.useState("tracks");
-  const tabs = ["tracks", "artists", "albums"];
-
+  const tabs = [
+      {name:"tracks",icon:"music"},
+      {name:"artists",icon:"group"},
+      {name:"albums",icon:"list"}
+  ]
   const renderTabContent = () => {
     switch (activeItem) {
       case "tracks":

@@ -1,5 +1,7 @@
 import React from "react";
 import { Input, Menu, Segment } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
+
 const TabsMenu = (props) => {
   return (
     <div>
@@ -7,8 +9,9 @@ const TabsMenu = (props) => {
         {props.tabs.map((tabName) => {
           return (
             <Menu.Item
-              name={tabName}
-              active={props.activeItem === tabName}
+              icon={<Icon disabled name={tabName.icon} />}
+              name={tabName.name}
+              active={props.activeItem === tabName.name}
               onClick={(e, { name }) => props.setActiveItem(name)}
             />
           );
