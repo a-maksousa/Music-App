@@ -5,16 +5,20 @@ import Dashboard from "./views/Dashboard";
 import Tracks from "./views/Tracks";
 import Artists from "./views/Artists";
 import Albums from "./views/Albums";
+import NotFound from "./views/NotFound";
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Dashboard />
-        </Route>
-      </Switch>
-    </Router>
+    <Layout>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Dashboard />
+          </Route>
+          <Route render={() => <NotFound />} />
+        </Switch>
+      </Router>
+    </Layout>
   );
 };
 

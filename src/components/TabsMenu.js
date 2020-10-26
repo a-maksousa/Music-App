@@ -3,7 +3,7 @@ import { Input, Menu, Segment } from "semantic-ui-react";
 const TabsMenu = (props) => {
   return (
     <div>
-      <Menu attached="top" tabular>
+      <Menu pointing>
         {props.tabs.map((tabName) => {
           return (
             <Menu.Item

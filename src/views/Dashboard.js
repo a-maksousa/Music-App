@@ -6,10 +6,11 @@ import Albums from "./Albums";
 import TabsMenu from "../components/TabsMenu";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Segment } from "semantic-ui-react";
 const Dashboard = (props) => {
   const [activeItem, setActiveItem] = React.useState("tracks");
-  const tabs = ["tracks","artists","albums"]
-  
+  const tabs = ["tracks", "artists", "albums"];
+
   const renderTabContent = () => {
     switch (activeItem) {
       case "tracks":
@@ -21,17 +22,19 @@ const Dashboard = (props) => {
     }
   };
   return (
-    <Layout>
-      <div className="Dashboard">
-        <Row>
-          <Col>
-            <TabsMenu tabs={tabs} activeItem={activeItem} setActiveItem={setActiveItem}>
-              {renderTabContent()}
-            </TabsMenu>
-          </Col>
-        </Row>
-      </div>
-    </Layout>
+    <div className="Dashboard">
+      <Row>
+        <Col>
+          <TabsMenu
+            tabs={tabs}
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
+          >
+            {renderTabContent()}
+          </TabsMenu>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
