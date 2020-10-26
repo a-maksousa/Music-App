@@ -12,6 +12,10 @@ import PageLoader from "../components/PageLoader";
 const Dashboard = (props) => {
   const [activeItem, setActiveItem] = React.useState("tracks");
   const [loaderActive, setLoaderActive] = React.useState(true);
+  const [lstArtists, setArtists] = React.useState([]);
+  const [lstAlbums, setAlbums] = React.useState([]);
+  const [lstTracks, setTracks] = React.useState([]);
+
   const tabs = [
     { name: "tracks", icon: "music" },
     { name: "artists", icon: "group" },
@@ -21,13 +25,20 @@ const Dashboard = (props) => {
   React.useEffect(() => {
     const fetchInitData = async () => {
       const artists = await httpClient.get("/artists", { page: 1 });
-      const albums = await httpClient.get(`/artists/${artists.data.result[0].id_artist}/albums`);
-      const tracks = await httpClient.get(`artists/${artists.data.result[0].id_artist}/albums/${albums.data.result.albums[0].id_album}/tracks`);
-      console.clear();
-      console.log(artists);
-      console.log(albums);
-      console.log(tracks);
-      setLoaderActive(false)
+      const albums = await httpClient.get(`/artists/${artists.data.result[1].id_artist}/albums`);
+      const tracksResp = await httpClient.get(`artists/${artists.data.result[1].id_artist}/albums/${albums.data.result.albums[0].id_album}/tracks`);
+
+      let tracksResult = [];
+      if (tracksResp.data.success) {
+        const result = tracksResp.data.result;
+        tracksResult = result.tracks.map((trackItem) => ({ ...trackItem, cover: result.cover, artist: result.artist }));
+      }
+
+      setArtists(artists.data.success ? artists.data : []);
+      setAlbums(albums.data.success ? albums.data : []);
+      setTracks(tracksResult);
+
+      setLoaderActive(false);
     };
     fetchInitData();
   }, []);
@@ -35,11 +46,11 @@ const Dashboard = (props) => {
   const renderTabContent = () => {
     switch (activeItem) {
       case "tracks":
-        return <Tracks />;
+        return <Tracks lstTracks={lstTracks} />;
       case "artists":
-        return <Artists />;
+        return <Artists lstAlbums={lstAlbums} />;
       case "albums":
-        return <Albums />;
+        return <Albums lstTracks={lstTracks} />;
     }
   };
   return (
