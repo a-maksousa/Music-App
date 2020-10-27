@@ -15,9 +15,9 @@ const DataTable = (props) => {
           emptyDataSourceMessage: "No Data Found ...",
         },
       }}
-      options={{ 
-        maxBodyHeight: "60vh",   
-        sorting:false,
+      options={{
+        maxBodyHeight: "60vh",
+        sorting: false,
         draggable: false,
         emptyRowsWhenPaging: false,
         paging: false,
@@ -27,6 +27,10 @@ const DataTable = (props) => {
       }}
     />
   );
+};
+
+DataTable.defaultProps = {
+  handleRowSelect: () => {},
 };
 
 export default DataTable;
