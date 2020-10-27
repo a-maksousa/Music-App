@@ -25,8 +25,8 @@ const Dashboard = (props) => {
   React.useEffect(() => {
     const fetchInitData = async () => {
       const artists = await httpClient.get("/artists", { page: 1 });
-      const albums = await httpClient.get(`/artists/${artists.data.result[1].id_artist}/albums`);
-      const tracksResp = await httpClient.get(`artists/${artists.data.result[1].id_artist}/albums/${albums.data.result.albums[0].id_album}/tracks`);
+      const albumsResp = await httpClient.get(`/artists/${artists.data.result[5].id_artist}/albums`);
+      const tracksResp = await httpClient.get(`artists/${artists.data.result[5].id_artist}/albums/${albumsResp.data.result.albums[0].id_album}/tracks`);
 
       let tracksResult = [];
       if (tracksResp.data.success) {
@@ -34,8 +34,8 @@ const Dashboard = (props) => {
         tracksResult = result.tracks.map((trackItem) => ({ ...trackItem, cover: result.cover, artist: result.artist }));
       }
 
-      setArtists(artists.data.success ? artists.data : []);
-      setAlbums(albums.data.success ? albums.data : []);
+      setArtists(artists.data.success ? artists.data.result : []);
+      setAlbums(albumsResp.data.success ? albumsResp.data.result.albums : []);
       setTracks(tracksResult);
 
       setLoaderActive(false);
@@ -48,9 +48,9 @@ const Dashboard = (props) => {
       case "tracks":
         return <Tracks lstTracks={lstTracks} />;
       case "artists":
-        return <Artists lstAlbums={lstAlbums} />;
+        return <Artists lstArtists={lstArtists} />;
       case "albums":
-        return <Albums lstTracks={lstTracks} />;
+        return <Albums lstAlbums={lstAlbums} />;
     }
   };
   return (

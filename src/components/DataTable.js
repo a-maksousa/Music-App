@@ -1,5 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
+import { Icon } from "semantic-ui-react";
 
 const DataTable = (props) => {
   return (
@@ -16,6 +17,7 @@ const DataTable = (props) => {
       }}
       options={{ 
         maxBodyHeight: "60vh",   
+        sorting:false,
         draggable: false,
         emptyRowsWhenPaging: false,
         paging: false,
