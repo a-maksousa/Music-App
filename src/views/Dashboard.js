@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../components/Layout";
 import Tracks from "./Tracks";
 import Artists from "./Artists";
 import Albums from "./Albums";
@@ -8,6 +7,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import httpClient from "../httpClient";
 import PageLoader from "../components/PageLoader";
+import { Switch, Route } from "react-router-dom";
+import { Segment, Header } from "semantic-ui-react";
+import { TracksRoute, AlbumsRoute, ArtistsRoute } from "../Routes";
 
 const Dashboard = (props) => {
   const [activeItem, setActiveItem] = React.useState("tracks");
@@ -17,16 +19,18 @@ const Dashboard = (props) => {
   const [lstTracks, setTracks] = React.useState([]);
 
   const tabs = [
-    { name: "tracks", icon: "music" },
-    { name: "artists", icon: "group" },
-    { name: "albums", icon: "list" },
+    { name: "tracks", icon: "music", link: TracksRoute },
+    { name: "artists", icon: "group", link: ArtistsRoute },
+    { name: "albums", icon: "list", link: AlbumsRoute },
   ];
 
   React.useEffect(() => {
     const fetchInitData = async () => {
       const artists = await httpClient.get("/artists", { page: 1 });
       const albumsResp = await httpClient.get(`/artists/${artists.data.result[5].id_artist}/albums`);
-      const tracksResp = await httpClient.get(`artists/${artists.data.result[5].id_artist}/albums/${albumsResp.data.result.albums[0].id_album}/tracks`);
+      const tracksResp = await httpClient.get(
+        `artists/${artists.data.result[5].id_artist}/albums/${albumsResp.data.result.albums[0].id_album}/tracks`
+      );
 
       let tracksResult = [];
       if (tracksResp.data.success) {
@@ -43,22 +47,36 @@ const Dashboard = (props) => {
     fetchInitData();
   }, []);
 
-  const renderTabContent = () => {
-    switch (activeItem) {
-      case "tracks":
-        return <Tracks lstTracks={lstTracks} />;
-      case "artists":
-        return <Artists lstArtists={lstArtists} />;
-      case "albums":
-        return <Albums lstAlbums={lstAlbums} />;
-    }
-  };
   return (
     <div className="Dashboard">
       <Row>
         <Col>
           <TabsMenu tabs={tabs} activeItem={activeItem} setActiveItem={setActiveItem}>
-            {renderTabContent()}
+            <Switch>
+              <Route exact path="/artists">
+                <Artists lstArtists={lstArtists} />
+              </Route>
+              <Route exact path="/albums">
+                <Albums lstAlbums={lstAlbums} />
+              </Route>
+              <Route exact path="/tracks">
+                <Tracks lstTracks={lstTracks} />
+              </Route>
+              <Route exact path="/">
+                <Segment>
+                  <Header as="h1">Latest Artists</Header>
+                  <Artists lstArtists={lstArtists.slice(0,5)} />
+                </Segment>
+                <Segment>
+                  <Header as="h1">Latest Albums</Header>
+                  <Albums lstAlbums={lstAlbums.slice(0,5)} />
+                </Segment>
+                <Segment>
+                  <Header as="h1">Latest Tracks</Header>
+                  <Tracks lstTracks={lstTracks.slice(0,5)} />
+                </Segment>
+              </Route>
+            </Switch>
           </TabsMenu>
         </Col>
       </Row>

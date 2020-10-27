@@ -1,7 +1,8 @@
 import React from "react";
+import CardsList from "../components/CardsList";
 
 const Artists = (props) => {
-  return <p>Artists</p>;
+  return <CardsList data={props.lstArtists} labelField="artist" />;
 };
 
 export default Artists;

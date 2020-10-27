@@ -1,18 +1,15 @@
 import "./App.css";
 import Layout from "./components/Layout";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
-import Tracks from "./views/Tracks";
-import Artists from "./views/Artists";
-import Albums from "./views/Albums";
 import NotFound from "./views/NotFound";
-
+import { MainRoute } from "./Routes";
 const App = () => {
   return (
     <Layout>
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route path={MainRoute}>
             <Dashboard />
           </Route>
           <Route render={() => <NotFound />} />
