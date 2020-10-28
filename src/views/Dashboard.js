@@ -4,6 +4,7 @@ import Artists from "./Artists";
 import Albums from "./Albums";
 import Lyrices from "./Lyrics";
 import ArtistsAlbums from "./ArtistsAlbums";
+import ArtistsAlbumsTracks from "./ArtistsAlbumsTracks";
 import TabsMenu from "../components/TabsMenu";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,7 +12,7 @@ import httpClient from "../httpClient";
 import PageLoader from "../components/PageLoader";
 import { Switch, Route } from "react-router-dom";
 import { Segment, Header } from "semantic-ui-react";
-import { TracksRoute, AlbumsRoute, ArtistsRoute, LyricsRoute, ArtistsAlbumsRoute, MainRoute } from "../Routes";
+import { TracksRoute, AlbumsRoute, ArtistsRoute, LyricsRoute, ArtistsAlbumsRoute, MainRoute, ArtistsAlbumsTracksRoute } from "../Routes";
 
 const Dashboard = (props) => {
   const [activeItem, setActiveItem] = React.useState("tracks");
@@ -32,7 +33,7 @@ const Dashboard = (props) => {
       const artists = artistsResp.data.success ? artistsResp.data.result : [];
 
       const albumsResp = await httpClient.get(`/artists/${artists[5].id_artist}/albums`);
-      const albums = albumsResp.data.success ? albumsResp.data.result.albums : [];
+      const albums = albumsResp.data.success ? albumsResp.data.result.albums.map((item) => ({ ...item, id_artist: artists[5].id_artist })) : [];
 
       const tracksResp = await httpClient.get(`artists/${artists[5].id_artist}/albums/${albums[0].id_album}/tracks`);
       const tacks = tracksResp.data.success
@@ -42,7 +43,8 @@ const Dashboard = (props) => {
             id_album: albums[0].id_album,
             artist: artists[5].artist,
             id_artist: artists[5].id_artist,
-          })) : [];
+          }))
+        : [];
 
       setArtists(artists);
       setAlbums(albums);
@@ -74,17 +76,17 @@ const Dashboard = (props) => {
               <Route exact path={ArtistsAlbumsRoute}>
                 <ArtistsAlbums />
               </Route>
+              <Route exact path={ArtistsAlbumsTracksRoute}>
+                <ArtistsAlbumsTracks />
+              </Route>
               <Route exact path={MainRoute}>
                 <Segment>
-                  <Header as="h1">Latest Artists</Header>
                   <Artists lstArtists={lstArtists.slice(0, 5)} />
                 </Segment>
                 <Segment>
-                  <Header as="h1">Latest Albums</Header>
                   <Albums lstAlbums={lstAlbums.slice(0, 5)} />
                 </Segment>
                 <Segment>
-                  <Header as="h1">Latest Tracks</Header>
                   <Tracks lstTracks={lstTracks.slice(0, 5)} />
                 </Segment>
               </Route>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import httpClient from "../httpClient";
-import { Header, Segment } from "semantic-ui-react";
+import { Header, Segment,Icon } from "semantic-ui-react";
 import PageLoader from "../components/PageLoader";
 
 const Lyrices = (props) => {
@@ -31,6 +31,10 @@ const Lyrices = (props) => {
   return (
     <Segment>
       <div className="subTabContainer">
+        <Header block as="h2">
+          <Icon name="file audio" />
+          <Header.Content>Lyrics</Header.Content>
+        </Header>
         <Header as="h3">{lyrics}</Header>
         <PageLoader active={loaderActive} />
       </div>

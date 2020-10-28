@@ -17,7 +17,7 @@ const TabsMenu = (props) => {
         {props.tabs.map((tabName) => {
           return (
             <Menu.Item
-              icon={<Icon disabled name={tabName.icon} />}
+              icon={tabName.icon}
               name={tabName.name}
               active={activeItem === tabName.name}
               onClick={(e, { name }) => handleMenuClick(name, tabName.link)}

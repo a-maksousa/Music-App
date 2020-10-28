@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "../components/DataTable";
 import { withRouter } from "react-router-dom";
 import { LyricsRoute } from "../Routes";
+import { Header, Icon } from "semantic-ui-react";
 
 const Tracks = (props) => {
   const columns = [
@@ -10,20 +11,26 @@ const Tracks = (props) => {
     { title: "Artist Name", cellStyle: { width: "20%" }, field: "artist" },
   ];
   return (
-    <DataTable
-      handleRowSelect={(selectedRow) => {
-        props.history.push({
-          pathname: LyricsRoute,
-          state: {
-            id_artist: selectedRow.id_artist,
-            id_album: selectedRow.id_album,
-            id_track: selectedRow.id_track,
-          },
-        });
-      }}
-      columns={columns}
-      data={props.lstTracks}
-    />
+    <>
+      <Header block as="h2">
+        <Icon name="music" />
+        <Header.Content>Tracks</Header.Content>
+      </Header>
+      <DataTable
+        handleRowSelect={(selectedRow) => {
+          props.history.push({
+            pathname: LyricsRoute,
+            state: {
+              id_artist: selectedRow.id_artist,
+              id_album: selectedRow.id_album,
+              id_track: selectedRow.id_track,
+            },
+          });
+        }}
+        columns={columns}
+        data={props.lstTracks}
+      />
+    </>
   );
 };
 
