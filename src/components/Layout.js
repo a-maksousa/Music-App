@@ -9,7 +9,7 @@ const Layout = (props) => {
     <Container>
       <Row>
         <Navbar fixed="top" expand="lg" variant="dark" bg="dark">
-          <Navbar.Brand href="#">Music App</Navbar.Brand>
+          <Navbar.Brand href="/">Music App</Navbar.Brand>
         </Navbar>
       </Row>
       {props.children}

@@ -7,6 +7,11 @@
   overflow: auto;
 }
 
+.Lyrics{
+  min-height: 50vh;
+  text-align: center;
+}
+
 .notfound {
   position: absolute;
   left: 50%;
