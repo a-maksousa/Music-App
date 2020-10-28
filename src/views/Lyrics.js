@@ -30,7 +30,7 @@ const Lyrices = (props) => {
 
   return (
     <Segment>
-      <div className="Lyrics">
+      <div className="subTabContainer">
         <Header as="h3">{lyrics}</Header>
         <PageLoader active={loaderActive} />
       </div>

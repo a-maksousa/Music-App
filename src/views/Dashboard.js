@@ -3,6 +3,7 @@ import Tracks from "./Tracks";
 import Artists from "./Artists";
 import Albums from "./Albums";
 import Lyrices from "./Lyrics";
+import ArtistsAlbums from "./ArtistsAlbums";
 import TabsMenu from "../components/TabsMenu";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,7 +11,7 @@ import httpClient from "../httpClient";
 import PageLoader from "../components/PageLoader";
 import { Switch, Route } from "react-router-dom";
 import { Segment, Header } from "semantic-ui-react";
-import { TracksRoute, AlbumsRoute, ArtistsRoute, LyricsRoute } from "../Routes";
+import { TracksRoute, AlbumsRoute, ArtistsRoute, LyricsRoute, ArtistsAlbumsRoute, MainRoute } from "../Routes";
 
 const Dashboard = (props) => {
   const [activeItem, setActiveItem] = React.useState("tracks");
@@ -72,7 +73,10 @@ const Dashboard = (props) => {
               <Route exact path={LyricsRoute}>
                 <Lyrices />
               </Route>
-              <Route exact path="/">
+              <Route exact path={ArtistsAlbumsRoute}>
+                <ArtistsAlbums />
+              </Route>
+              <Route exact path={MainRoute}>
                 <Segment>
                   <Header as="h1">Latest Artists</Header>
                   <Artists lstArtists={lstArtists.slice(0, 5)} />

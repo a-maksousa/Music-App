@@ -1,6 +1,7 @@
 import React from "react";
 import DataTable from "../components/DataTable";
 import { withRouter } from "react-router-dom";
+import { LyricsRoute } from "../Routes";
 
 const Tracks = (props) => {
   const columns = [
@@ -12,7 +13,7 @@ const Tracks = (props) => {
     <DataTable
       handleRowSelect={(selectedRow) => {
         props.history.push({
-          pathname: "/lyrics",
+          pathname: LyricsRoute,
           state: {
             id_artist: selectedRow.id_artist,
             id_album: selectedRow.id_album,

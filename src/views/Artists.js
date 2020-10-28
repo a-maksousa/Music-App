@@ -1,8 +1,17 @@
 import React from "react";
 import CardsList from "../components/CardsList";
+import { withRouter } from "react-router-dom";
+import { ArtistsAlbumsRoute } from "../Routes";
 
 const Artists = (props) => {
-  return <CardsList data={props.lstArtists} labelField="artist" />;
+  const handleClick = (item) => {
+    props.history.push({
+      pathname: ArtistsAlbumsRoute,
+      state: { id_artist: item.id_artist },
+      
+    });
+  };
+  return <CardsList onClick={handleClick} data={props.lstArtists} labelField="artist" />;
 };
 
-export default Artists;
+export default withRouter(Artists);
