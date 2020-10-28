@@ -18,7 +18,6 @@ const ArtistsAlbums = (props) => {
   React.useEffect(() => {
     const fetchLyrics = async () => {
       const id_artist = location.state.id_artist;
-      const id_album = location.state.id_album;
       const AlbumsResponse = await httpClient.get(`artists/${id_artist}/albums`);
       if (AlbumsResponse.data.success) {
         setAlbums(AlbumsResponse.data.result.albums);

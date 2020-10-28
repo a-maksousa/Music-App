@@ -28,27 +28,25 @@ const Dashboard = (props) => {
 
   React.useEffect(() => {
     const fetchInitData = async () => {
-      const artists = await httpClient.get("/artists", { page: 1 });
-      const albumsResp = await httpClient.get(`/artists/${artists.data.result[5].id_artist}/albums`);
-      const tracksResp = await httpClient.get(
-        `artists/${artists.data.result[5].id_artist}/albums/${albumsResp.data.result.albums[0].id_album}/tracks`
-      );
+      const artistsResp = await httpClient.get("/artists", { page: 1 });
+      const artists = artistsResp.data.success ? artistsResp.data.result : [];
 
-      let tracksResult = [];
-      if (tracksResp.data.success) {
-        const result = tracksResp.data.result;
-        tracksResult = result.tracks.map((trackItem) => ({
-          ...trackItem,
-          cover: result.cover,
-          artist: result.artist,
-          id_album: result.id_album,
-          id_artist: result.id_artist,
-        }));
-      }
+      const albumsResp = await httpClient.get(`/artists/${artists[5].id_artist}/albums`);
+      const albums = albumsResp.data.success ? albumsResp.data.result.albums : [];
 
-      setArtists(artists.data.success ? artists.data.result : []);
-      setAlbums(albumsResp.data.success ? albumsResp.data.result.albums : []);
-      setTracks(tracksResult);
+      const tracksResp = await httpClient.get(`artists/${artists[5].id_artist}/albums/${albums[0].id_album}/tracks`);
+      const tacks = tracksResp.data.success
+        ? tracksResp.data.result.tracks.map((item) => ({
+            ...item,
+            cover: albums[0].cover,
+            id_album: albums[0].id_album,
+            artist: artists[5].artist,
+            id_artist: artists[5].id_artist,
+          })) : [];
+
+      setArtists(artists);
+      setAlbums(albums);
+      setTracks(tacks);
 
       setLoaderActive(false);
     };
