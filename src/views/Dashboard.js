@@ -29,26 +29,12 @@ const Dashboard = (props) => {
 
   React.useEffect(() => {
     const fetchInitData = async () => {
-      const artistsResp = await httpClient.get("/artists", { page: 1 });
-      const artists = artistsResp.data.success ? artistsResp.data.result : [];
+      const response = await httpClient.get("", { q: "Latest" });
+      const dataDistict = getDistinctItems(response.data);
 
-      const albumsResp = await httpClient.get(`/artists/${artists[5].id_artist}/albums`);
-      const albums = albumsResp.data.success ? albumsResp.data.result.albums.map((item) => ({ ...item, id_artist: artists[5].id_artist })) : [];
-
-      const tracksResp = await httpClient.get(`artists/${artists[5].id_artist}/albums/${albums[0].id_album}/tracks`);
-      const tacks = tracksResp.data.success
-        ? tracksResp.data.result.tracks.map((item) => ({
-            ...item,
-            cover: albums[0].cover,
-            id_album: albums[0].id_album,
-            artist: artists[5].artist,
-            id_artist: artists[5].id_artist,
-          }))
-        : [];
-
-      setArtists(artists);
-      setAlbums(albums);
-      setTracks(tacks);
+      setArtists(dataDistict.lstArtists);
+      setAlbums(dataDistict.lstAlbums);
+      setTracks(dataDistict.lstTracks);
 
       setLoaderActive(false);
     };
@@ -56,6 +42,14 @@ const Dashboard = (props) => {
   }, []);
 
   const handleSearch = (data) => {
+    const dataDistict = getDistinctItems(data);
+
+    setArtists(dataDistict.lstArtists);
+    setAlbums(dataDistict.lstAlbums);
+    setTracks(dataDistict.lstTracks);
+  };
+
+  const getDistinctItems = (data) => {
     let lstArtists = [];
     let lstAlbums = [];
     let lstTracks = [];
@@ -70,9 +64,7 @@ const Dashboard = (props) => {
         lstTracks.push(dataItem);
       }
     });
-    setArtists(lstArtists);
-    setAlbums(lstAlbums);
-    setTracks(lstTracks);
+    return { lstArtists, lstAlbums, lstTracks };
   };
 
   return (
@@ -101,13 +93,13 @@ const Dashboard = (props) => {
               </Route>
               <Route exact path={MainRoute}>
                 <Segment>
-                  <Artists lstArtists={lstArtists.slice(0, 5)} />
+                  <Artists lstArtists={lstArtists.slice(0, 6)} />
                 </Segment>
                 <Segment>
-                  <Albums lstAlbums={lstAlbums.slice(0, 5)} />
+                  <Albums lstAlbums={lstAlbums.slice(0, 6)} />
                 </Segment>
                 <Segment>
-                  <Tracks lstTracks={lstTracks.slice(0, 5)} />
+                  <Tracks lstTracks={lstTracks.slice(0, 6)} />
                 </Segment>
               </Route>
             </Switch>
