@@ -7,8 +7,22 @@ import { Header, Icon } from "semantic-ui-react";
 const Tracks = (props) => {
   const columns = [
     { field: "url", title: " ", cellStyle: { width: "10%" }, render: (rowData) => <img src={rowData.cover} style={{ width: 50 }} /> },
-    { title: "Track Name", cellStyle: { width: "70%" }, field: "track" },
+    { title: "Track Name", cellStyle: { width: "50%" }, field: "track" },
     { title: "Artist Name", cellStyle: { width: "20%" }, field: "artist" },
+    {
+      title: "has Lyrics",
+      cellStyle: { width: "20%" },
+      render: (rowData) =>
+        rowData.haslyrics ? (
+          <Header color="green" as="h5">
+            With Lyrics
+          </Header>
+        ) : (
+          <Header color="red" as="h5">
+            No Lyrics
+          </Header>
+        ),
+    },
   ];
   return (
     <>
