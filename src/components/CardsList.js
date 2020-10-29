@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Icon, Image } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import img from "../images/artist.png";
 
 const CardsList = (props) => {

@@ -1,6 +1,5 @@
 import React from "react";
 import MaterialTable from "material-table";
-import { Icon } from "semantic-ui-react";
 
 const DataTable = (props) => {
   return (

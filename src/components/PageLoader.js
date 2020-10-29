@@ -1,6 +1,5 @@
 import React from "react";
-import { propTypes } from "react-bootstrap/esm/Image";
-import { Dimmer, Loader, Segment } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 const PageLoader = (props) => (
   <Dimmer active={props.active}>
