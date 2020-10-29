@@ -7,7 +7,7 @@ You can view a live demo over at https://sleepy-hollows-85121.herokuapp.com
 This application is used to explore tracks, artists, albums and lyrics for tracks.
 For Music data Happi is used
 
-### Setting Up For Local Development
+## Setting Up For Local Development
 
 - install required packages:
 
