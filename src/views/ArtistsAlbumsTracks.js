@@ -4,6 +4,8 @@ import { Segment, Header, Icon } from "semantic-ui-react";
 import httpClient from "../httpClient";
 import { useLocation } from "react-router-dom";
 import DataTable from "../components/DataTable";
+import { withRouter } from "react-router-dom";
+import { LyricsRoute } from "../Routes";
 
 const ArtistsAlbumsTracks = (props) => {
   const location = useLocation();
@@ -12,7 +14,6 @@ const ArtistsAlbumsTracks = (props) => {
   const columns = [
     { field: "url", title: " ", cellStyle: { width: "10%" }, render: (rowData) => <img alt="No Img" src={rowData.cover} style={{ width: 50 }} /> },
     { title: "Track Name", cellStyle: { width: "70%" }, field: "track" },
-    { title: "Artist Name", cellStyle: { width: "20%" }, field: "artist" },
   ];
 
   React.useEffect(() => {
@@ -22,7 +23,7 @@ const ArtistsAlbumsTracks = (props) => {
       try {
         const TracksResponse = await httpClient.get(`artists/${id_artist}/albums/${id_album}/tracks`);
         if (TracksResponse.data.success) {
-          setTracks(TracksResponse.data.result.tracks.map((item) => ({ ...item, cover: TracksResponse.data.result.cover })));
+          setTracks(TracksResponse.data.result.tracks.map((item) => ({ ...item, cover: TracksResponse.data.result.cover,id_artist,id_album })));
         }
       } catch (err) {
         console.log(err);
@@ -40,11 +41,24 @@ const ArtistsAlbumsTracks = (props) => {
           <Icon name="music" />
           <Header.Content>Related Tracks</Header.Content>
         </Header>
-        <DataTable columns={columns} data={tracks} />
+        <DataTable
+          handleRowSelect={(selectedRow) => {
+            props.history.push({
+              pathname: LyricsRoute,
+              state: {
+                id_artist: selectedRow.id_artist,
+                id_album: selectedRow.id_album,
+                id_track: selectedRow.id_track,
+              },
+            });
+          }}
+          columns={columns}
+          data={tracks}
+        />
         <PageLoader active={loaderActive} />
       </div>
     </Segment>
   );
 };
 
-export default ArtistsAlbumsTracks;
+export default withRouter(ArtistsAlbumsTracks);
