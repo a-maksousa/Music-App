@@ -55,11 +55,31 @@ const Dashboard = (props) => {
     fetchInitData();
   }, []);
 
+  const handleSearch = (data) => {
+    let lstArtists = [];
+    let lstAlbums = [];
+    let lstTracks = [];
+    data.result.forEach((dataItem) => {
+      if (!lstArtists.find((item) => item.id_artist == dataItem.id_artist)) {
+        lstArtists.push(dataItem);
+      }
+      if (!lstAlbums.find((item) => item.id_album == dataItem.id_album)) {
+        lstAlbums.push(dataItem);
+      }
+      if (!lstTracks.find((item) => item.id_track == dataItem.id_track)) {
+        lstTracks.push(dataItem);
+      }
+    });
+    setArtists(lstArtists);
+    setAlbums(lstAlbums);
+    setTracks(lstTracks);
+  };
+
   return (
     <div className="Dashboard">
       <Row>
         <Col>
-          <TabsMenu tabs={tabs} activeItem={activeItem} setActiveItem={setActiveItem}>
+          <TabsMenu onSearch={handleSearch} tabs={tabs} activeItem={activeItem} setActiveItem={setActiveItem}>
             <Switch>
               <Route exact path={ArtistsRoute}>
                 <Artists lstArtists={lstArtists} />
