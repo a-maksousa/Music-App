@@ -12,12 +12,17 @@ const ArtistsAlbums = (props) => {
 
   React.useEffect(() => {
     const fetchAlbums = async () => {
-      const id_artist = location.state.id_artist;
-      const AlbumsResponse = await httpClient.get(`artists/${id_artist}/albums`);
-      if (AlbumsResponse.data.success) {
-        setAlbums(AlbumsResponse.data.result.albums);
+      const id_artist = location.state ? location.state.id_artist : 0;
+      try {
+        const AlbumsResponse = await httpClient.get(`artists/${id_artist}/albums`);
+        if (AlbumsResponse.data.success) {
+          setAlbums(AlbumsResponse.data.result.albums);
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoaderActive(false);
       }
-      setLoaderActive(false);
     };
     fetchAlbums();
   }, []);

@@ -29,14 +29,18 @@ const Dashboard = (props) => {
 
   React.useEffect(() => {
     const fetchInitData = async () => {
-      const response = await httpClient.get("", { q: "Latest" });
-      const dataDistict = getDistinctItems(response.data);
+      try {
+        const response = await httpClient.get("", { q: "Latest" });
+        const dataDistict = getDistinctItems(response.data);
 
-      setArtists(dataDistict.lstArtists);
-      setAlbums(dataDistict.lstAlbums);
-      setTracks(dataDistict.lstTracks);
-
-      setLoaderActive(false);
+        setArtists(dataDistict.lstArtists);
+        setAlbums(dataDistict.lstAlbums);
+        setTracks(dataDistict.lstTracks);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoaderActive(false);
+      }
     };
     fetchInitData();
   }, []);

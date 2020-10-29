@@ -16,11 +16,16 @@ const TabsMenu = (props) => {
   };
   const handleSearch = async (data) => {
     setFetching(true);
-    const response = await httpClient.get("", { q: data.q });
-    if(response.data.success){
-      props.onSearch(response.data)
+    try {
+      const response = await httpClient.get("", { q: data.q });
+      if (response.data.success) {
+        props.onSearch(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setFetching(false);
     }
-    setFetching(false);
   };
 
   return (
@@ -40,10 +45,17 @@ const TabsMenu = (props) => {
         <Menu.Menu position="right">
           <Menu.Item>
             <form onSubmit={handleSubmit(handleSearch)}>
-              <Controller as={<Input disabled={isFetching} loading={isFetching} transparent placeholder="Search..." />} rules={{ required: true }} name="q" control={control} />
-              {!isFetching && <button className="fabutton">
-                <Icon name="search" />
-              </button>}
+              <Controller
+                as={<Input disabled={isFetching} loading={isFetching} transparent placeholder="Search..." />}
+                rules={{ required: true }}
+                name="q"
+                control={control}
+              />
+              {!isFetching && (
+                <button className="fabutton">
+                  <Icon name="search" />
+                </button>
+              )}
             </form>
           </Menu.Item>
         </Menu.Menu>

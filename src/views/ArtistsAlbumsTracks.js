@@ -1,6 +1,6 @@
 import React from "react";
 import PageLoader from "../components/PageLoader";
-import { Segment, Header,Icon } from "semantic-ui-react";
+import { Segment, Header, Icon } from "semantic-ui-react";
 import httpClient from "../httpClient";
 import { useLocation } from "react-router-dom";
 import DataTable from "../components/DataTable";
@@ -17,13 +17,18 @@ const ArtistsAlbumsTracks = (props) => {
 
   React.useEffect(() => {
     const fetchTracks = async () => {
-      const id_artist = location.state.id_artist;
-      const id_album = location.state.id_album;
-      const TracksResponse = await httpClient.get(`artists/${id_artist}/albums/${id_album}/tracks`);
-      if (TracksResponse.data.success) {
-        setTracks(TracksResponse.data.result.tracks.map((item) => ({ ...item, cover: TracksResponse.data.result.cover })));
+      const id_artist = location.state ? location.state.id_artist : 0;
+      const id_album = location.state ? location.state.id_album : 0;
+      try {
+        const TracksResponse = await httpClient.get(`artists/${id_artist}/albums/${id_album}/tracks`);
+        if (TracksResponse.data.success) {
+          setTracks(TracksResponse.data.result.tracks.map((item) => ({ ...item, cover: TracksResponse.data.result.cover })));
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoaderActive(false);
       }
-      setLoaderActive(false);
     };
     fetchTracks();
   }, []);
@@ -31,7 +36,7 @@ const ArtistsAlbumsTracks = (props) => {
   return (
     <Segment>
       <div className="subTabContainer">
-      <Header as="h2" block>
+        <Header as="h2" block>
           <Icon name="music" />
           <Header.Content>Related Tracks</Header.Content>
         </Header>
