@@ -2,13 +2,18 @@ import React from "react";
 import { Input, Menu, Segment } from "semantic-ui-react";
 import { Icon } from "semantic-ui-react";
 import { withRouter, useLocation } from "react-router-dom";
-
+import { useForm, Controller } from "react-hook-form";
 const TabsMenu = (props) => {
   const location = useLocation();
   const [activeItem, setActiveItem] = React.useState(location.pathname.replace(/\//g, ""));
+  const { handleSubmit, control } = useForm();
+
   const handleMenuClick = (name, link) => {
     setActiveItem(name);
     props.history.push(link);
+  };
+  const handleSearch = (data) => {
+    alert(JSON.stringify(data));
   };
 
   return (
@@ -27,7 +32,12 @@ const TabsMenu = (props) => {
 
         <Menu.Menu position="right">
           <Menu.Item>
-            <Input transparent icon={{ name: "search", link: true }} placeholder="Search ..." />
+            <form onSubmit={handleSubmit(handleSearch)}>
+              <Controller as={<Input transparent placeholder="Search..." />} rules={{ required: true }} name="q" control={control} />
+              <button className="fabutton">
+                <Icon name="search" />
+              </button>
+            </form>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
