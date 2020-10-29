@@ -1,5 +1,7 @@
 ## Music App
 
+You can view a live demo over at https://sleepy-hollows-85121.herokuapp.com
+
 ## Description
 
 This application is used to explore tracks, artists, albums and lyrics for tracks.
