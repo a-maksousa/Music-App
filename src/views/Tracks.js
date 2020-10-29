@@ -6,7 +6,7 @@ import { Header, Icon } from "semantic-ui-react";
 
 const Tracks = (props) => {
   const columns = [
-    { field: "url", title: " ", cellStyle: { width: "10%" }, render: (rowData) => <img src={rowData.cover} style={{ width: 50 }} /> },
+    { field: "url", title: " ", cellStyle: { width: "10%" }, render: (rowData) => <img alt="No Img" src={rowData.cover} style={{ width: 50 }} /> },
     { title: "Track Name", cellStyle: { width: "50%" }, field: "track" },
     { title: "Artist Name", cellStyle: { width: "20%" }, field: "artist" },
     {

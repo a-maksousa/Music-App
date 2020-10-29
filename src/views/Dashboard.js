@@ -11,7 +11,7 @@ import Col from "react-bootstrap/Col";
 import httpClient from "../httpClient";
 import PageLoader from "../components/PageLoader";
 import { Switch, Route } from "react-router-dom";
-import { Segment, Header } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 import { TracksRoute, AlbumsRoute, ArtistsRoute, LyricsRoute, ArtistsAlbumsRoute, MainRoute, ArtistsAlbumsTracksRoute } from "../Routes";
 
 const Dashboard = (props) => {
@@ -58,13 +58,13 @@ const Dashboard = (props) => {
     let lstAlbums = [];
     let lstTracks = [];
     data.result.forEach((dataItem) => {
-      if (!lstArtists.find((item) => item.id_artist == dataItem.id_artist)) {
+      if (!lstArtists.find((item) => item.id_artist === dataItem.id_artist)) {
         lstArtists.push(dataItem);
       }
-      if (!lstAlbums.find((item) => item.id_album == dataItem.id_album)) {
+      if (!lstAlbums.find((item) => item.id_album === dataItem.id_album)) {
         lstAlbums.push(dataItem);
       }
-      if (!lstTracks.find((item) => item.id_track == dataItem.id_track)) {
+      if (!lstTracks.find((item) => item.id_track === dataItem.id_track)) {
         lstTracks.push(dataItem);
       }
     });
