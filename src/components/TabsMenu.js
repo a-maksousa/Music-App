@@ -30,7 +30,7 @@ const TabsMenu = (props) => {
 
   return (
     <div>
-      <Menu pointing>
+      <Menu stackable pointing>
         {props.tabs.map((tabName) => {
           return (
             <Menu.Item
@@ -42,7 +42,7 @@ const TabsMenu = (props) => {
           );
         })}
 
-        <Menu.Menu position="right">
+        <Menu.Menu  position="right">
           <Menu.Item>
             <form onSubmit={handleSubmit(handleSearch)}>
               <Controller
