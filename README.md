@@ -1,6 +1,6 @@
 ## Music App
 
-You can view a live demo over at https://sleepy-hollows-85121.herokuapp.com
+You can view a live demo over at https://music-lyrix.netlify.app
 
 ## Description
 
